@@ -71,8 +71,8 @@ public class VoteLoggerCommand implements CommandExecutor {
                 sender.sendMessage(vl.config.getUserMsg("command-blank"));
 
                 sender.sendMessage(vl.config.getUserMsg(
-                    "command-available", availableCommands)
-                );
+                    "command-available", availableCommands
+                ));
 
                 return false;
             }
