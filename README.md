@@ -15,6 +15,10 @@ A software for logging votes, works with Votifier.
 1. Test your vote system at [Votifier Tester](https://mctools.org/votifier-tester).
 1. Open `plugins/VoteLogger/vote.log` and check these test(real) votes are properly logged.
 
+## Commands
+
+`/votelogger help` or `/vl help` to see the reference. Available commands are `version` and `help`.
+
 ## License
 
 ```text
