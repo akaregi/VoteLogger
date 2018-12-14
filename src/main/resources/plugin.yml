@@ -34,3 +34,5 @@ commands:
   vl:
     aliases: [votelogger]
     description: "Command for VoteLogger."
+    permission: votelogger.admin
+    usage: /<command> [args]
