@@ -27,6 +27,13 @@ import org.bukkit.configuration.file.FileConfiguration;
 import lombok.Getter;
 import lombok.NonNull;
 
+/**
+ *
+ * Manages and gets configuration.
+ *
+ * @author akaregi
+ * @since 1.0.1-pre
+ */
 public class VoteLoggerConfig {
     /**
      * Instance of VoteLogger.
@@ -52,6 +59,9 @@ public class VoteLoggerConfig {
     /**
      * Gets plain message from config.yml.
      *
+     * @author akaregi
+     * @since 1.0.2-pre
+     *
      * @param path Path to get YAML's message
      * @param args Arguments to replace message's variables
      */
@@ -61,6 +71,9 @@ public class VoteLoggerConfig {
 
     /**
      * Gets formatted message (prefix + message) from config.yml.
+     *
+     * @author akaregi
+     * @since 1.0.2-pre
      *
      * @param path Path to get YAML's message
      * @param args Arguments to replace message's variables
