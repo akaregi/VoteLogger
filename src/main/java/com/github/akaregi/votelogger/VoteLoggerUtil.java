@@ -22,17 +22,24 @@ package com.github.akaregi.votelogger;
 
 import java.time.Instant;
 import java.time.ZoneOffset;
-import java.util.UUID;
-
-import org.bukkit.Bukkit;
 
 import lombok.NonNull;
 
+/**
+ * Useful utilities.
+ *
+ * @author akaregi
+ * @since 1.0.1-pre
+ *
+ */
 public final class VoteLoggerUtil {
     /**
-     * Converts epoch time to String formatted with ISO 8601.
+     * Converts epoch time to String formatted with ISO 8601. *
      *
-     * @param epoch Epoch time
+     * @author akaregi
+     * @since 1.0.1-pre
+     *
+     * @param epoch  Epoch time
      * @param offset Offset of Time
      *
      * @return String formatted with ISO 8601
@@ -40,19 +47,5 @@ public final class VoteLoggerUtil {
      */
     public static String epochToISO8601(long epoch, @NonNull Integer offset) {
         return Instant.ofEpochSecond(epoch).atOffset(ZoneOffset.ofHours(offset)).toString();
-    }
-
-    /**
-     * Converts Minecraft ID to UUID
-     *
-     * @param id Minecraft ID to convert
-     * @return UUID, or new UUID(0, 0) if ID is unknown
-     */
-    public static UUID MCIDToUUID(@NonNull String id) {
-        try {
-            return Bukkit.getPlayer(id).getUniqueId();
-        } catch (NullPointerException e) {
-            return new UUID(0, 0);
-        }
     }
 }
