@@ -20,35 +20,39 @@
 
 package com.github.akaregi.votelogger;
 
-import java.util.Date;
+import java.time.Instant;
+import java.time.ZoneOffset;
+import java.util.UUID;
 
-import org.bukkit.command.CommandSender;
-import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.Bukkit;
+
+import lombok.NonNull;
 
 public final class VoteLoggerUtil {
-
     /**
-     * Converts epoch time to String.
+     * Converts epoch time to String formatted with ISO 8601.
      *
-     * @param  epoch Epoch time
+     * @param epoch Epoch time
+     * @param offset Offset of Time
      *
-     * @return String that is converted from epoch time.
+     * @return String formatted with ISO 8601
      *
      */
-    public static String epochToString(long epoch) {
-        return new Date(epoch * 1000).toString();
+    public static String epochToISO8601(long epoch, @NonNull Integer offset) {
+        return Instant.ofEpochSecond(epoch).atOffset(ZoneOffset.ofHours(offset)).toString();
     }
 
     /**
-     * Sends message to sender.
+     * Converts Minecraft ID to UUID
      *
-     * @param sender CommandSender, who executed some command.
-     * @param config Configuration that contains language settings
-     * @param path   Path of language file's item
-     *
-     * @return Formatted message that prefix is connected.
+     * @param id Minecraft ID to convert
+     * @return UUID, or new UUID(0, 0) if ID is unknown
      */
-    public static void sendMessage(CommandSender sender, FileConfiguration config, String path) {
-        sender.sendMessage(VoteLogger.prefix + config.getString(path));
+    public static UUID MCIDToUUID(@NonNull String id) {
+        try {
+            return Bukkit.getPlayer(id).getUniqueId();
+        } catch (NullPointerException e) {
+            return new UUID(0, 0);
+        }
     }
 }

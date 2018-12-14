@@ -24,10 +24,17 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 
+import lombok.NonNull;
+
 public class VoteLoggerCommand implements CommandExecutor {
     private final VoteLogger vl;
 
-    public VoteLoggerCommand(VoteLogger vl) {
+    /**
+     * String of implemented sub-commands.
+     */
+    private final String availableCommands = "help, version";
+
+    public VoteLoggerCommand(@NonNull VoteLogger vl) {
         this.vl = vl;
     }
 
@@ -36,22 +43,42 @@ public class VoteLoggerCommand implements CommandExecutor {
         if (sender.hasPermission("votelogger.admin")) {
             // Hey you're admin, right?
             if (args.length != 0) {
-                if (args[0].equalsIgnoreCase("version")) {
-                    sender.sendMessage(VoteLogger.prefix + vl.VERSION);
+                // /vl version
+                if (
+                    args[0].equalsIgnoreCase("version") ||
+                    args[0].equalsIgnoreCase("ver")
+                ) {
+                    sender.sendMessage(vl.config.getUserMsg(
+                        "plugin-version", vl.version, vl.author
+                    ));
+
                     return true;
                 }
 
-                VoteLoggerUtil.sendMessage(sender, vl.config, "command-unknown");
+                // /vl help
+                if (args[0].equalsIgnoreCase("help")) {
+                    sender.sendMessage(vl.config.getUserMsg(
+                        "command-available", availableCommands
+                    ));
+
+                    return true;
+                }
+
+                sender.sendMessage(vl.config.getUserMsg("command-unknown"));
 
                 return false;
             } else {
-                VoteLoggerUtil.sendMessage(sender, vl.config, "command-blank");
+                sender.sendMessage(vl.config.getUserMsg("command-blank"));
 
-                return true;
+                sender.sendMessage(vl.config.getUserMsg(
+                    "command-available", availableCommands)
+                );
+
+                return false;
             }
         } else {
             // YOU ARE NOT ADMINISTRATOR, SORRY.
-            VoteLoggerUtil.sendMessage(sender, vl.config, "permission");
+            sender.sendMessage(vl.config.getLogMsg("insufficient-permission"));
             return true;
         }
 	}

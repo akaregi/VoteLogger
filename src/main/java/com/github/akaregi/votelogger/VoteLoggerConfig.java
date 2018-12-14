@@ -20,9 +20,12 @@
 
 package com.github.akaregi.votelogger;
 
+import java.text.MessageFormat;
+
 import org.bukkit.configuration.file.FileConfiguration;
 
 import lombok.Getter;
+import lombok.NonNull;
 
 public class VoteLoggerConfig {
     /**
@@ -36,7 +39,7 @@ public class VoteLoggerConfig {
     @Getter
     private FileConfiguration config;
 
-    public VoteLoggerConfig(VoteLogger vl) {
+    public VoteLoggerConfig(@NonNull VoteLogger vl) {
         this.vl = vl;
         loadConfig();
     }
@@ -44,5 +47,25 @@ public class VoteLoggerConfig {
     private void loadConfig() {
         vl.saveDefaultConfig();
         config = vl.getConfig();
+    }
+
+    /**
+     * Gets plain message from config.yml.
+     *
+     * @param path Path to get YAML's message
+     * @param args Arguments to replace message's variables
+     */
+    public String getLogMsg(@NonNull String path, Object ...args) {
+        return MessageFormat.format(config.getString(path), args).replace("&", "§");
+    }
+
+    /**
+     * Gets formatted message (prefix + message) from config.yml.
+     *
+     * @param path Path to get YAML's message
+     * @param args Arguments to replace message's variables
+     */
+    public String getUserMsg(@NonNull String path, Object ... args) {
+        return vl.prefix + getLogMsg(path, args);
     }
 }

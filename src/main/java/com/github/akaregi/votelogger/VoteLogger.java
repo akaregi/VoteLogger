@@ -20,9 +20,9 @@
 
 package com.github.akaregi.votelogger;
 
+import java.util.List;
 import java.util.logging.Logger;
 
-import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.event.HandlerList;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -31,7 +31,7 @@ public class VoteLogger extends JavaPlugin {
     /**
      * Version of VoteLogger.
      */
-    protected final String VERSION = this.getDescription().getVersion();
+    protected final String version = getDescription().getVersion();
 
     /**
      * Logger for VoteLogger
@@ -39,24 +39,24 @@ public class VoteLogger extends JavaPlugin {
     protected final Logger log = Logger.getLogger(getName());
 
     /**
-     * Targeted path to log for VoteLogger.
-     */
-    protected final String LOGPATH = getDataFolder() + "/vote.log";
-
-    /**
      * Config structure.
      */
-    protected final FileConfiguration config = new VoteLoggerConfig(this).getConfig();
+    protected final VoteLoggerConfig config = new VoteLoggerConfig(this);
+
+    /**
+     * Author name
+     */
+    protected final List<String> author = getDescription().getAuthors();
 
     /**
      * Message prefix.
      */
-    protected static String prefix;
+    protected String prefix = "";
 
     @Override
     public void onEnable() {
         // Initialize prefix
-        prefix = config.getString("prefix") + " ";
+        prefix = config.getLogMsg("prefix") + " ";
 
         // Register event VotifierEvent
         getServer().getPluginManager().registerEvents(
@@ -67,7 +67,7 @@ public class VoteLogger extends JavaPlugin {
         getCommand("vl").setExecutor(new VoteLoggerCommand(this));
 
         // GO GO GO
-        log.info(config.getString("enable"));
+        log.info(config.getLogMsg("enable", version));
     }
 
     @Override
@@ -76,6 +76,6 @@ public class VoteLogger extends JavaPlugin {
         HandlerList.unregisterAll(this);
 
         // GOOD BYE.
-        log.info(config.getString("disable"));
+        log.info(config.getLogMsg("disable", version));
     }
 }

@@ -38,8 +38,14 @@ public class VoteLoggerListener implements Listener {
      */
     private final VoteLogger vl;
 
-    public VoteLoggerListener(VoteLogger vl) {
+    /**
+     * Targeted path to log for VoteLogger.
+     */
+    private final String logpath;
+
+    public VoteLoggerListener(@NonNull VoteLogger vl) {
         this.vl = vl;
+        logpath = vl.getDataFolder() + "/" + vl.config.getLogMsg("log-name");
     }
 
     /**
@@ -60,29 +66,35 @@ public class VoteLoggerListener implements Listener {
      *
      * @param vote Vote information to be logged
      */
-    private void writeVoteLog(Vote vote) {
+    private void writeVoteLog(@NonNull Vote vote) {
         try {
-            @NonNull
-            BufferedWriter writer = new BufferedWriter(new FileWriter(vl.LOGPATH, true));
+            BufferedWriter writer = new BufferedWriter(new FileWriter(logpath, true));
 
-            writer.write(
-                    String.format(
-                        "[%s] %s %s",
-                        VoteLoggerUtil.epochToString(
-                            Integer.parseInt(vote.getTimeStamp())
-                        ),
-                        vote.getServiceName(),
-                        vote.getUsername())
-                    );
+            writer.write(vl.config.getLogMsg(
+                // format style from config.yml
+                "logFormat",
+
+                // config.yml:logformat Time ({0})
+                VoteLoggerUtil.epochToISO8601(
+                    Integer.parseInt(vote.getTimeStamp()),
+                    vl.config.getConfig().getInt("log-offset")
+                ),
+
+                // config.yml:logformat Service name ({1})
+                vote.getServiceName(),
+
+                // config.yml:logformat Username ({2})
+                vote.getUsername())
+            );
 
             writer.newLine();
             writer.flush();
             writer.close();
 
-            vl.log.info("Logged vote: " + vote.toString());
+            vl.log.info(vl.config.getLogMsg("console-log-success", vote.toString()));
 
         } catch (IOException e) {
-            vl.log.severe("Logging failure: " + vote.toString());
+            vl.log.severe(vl.config.getLogMsg("console-log-failure", vote.toString()));
             e.printStackTrace();
         }
     }
