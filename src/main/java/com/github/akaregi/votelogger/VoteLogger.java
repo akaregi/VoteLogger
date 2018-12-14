@@ -56,7 +56,7 @@ public class VoteLogger extends JavaPlugin {
     @Override
     public void onEnable() {
         // Initialize prefix
-        prefix = config.getLogMsg("prefix") + " ";
+        prefix = config.getLogMsg("plugin-prefix") + " ";
 
         // Register event VotifierEvent
         getServer().getPluginManager().registerEvents(
@@ -67,7 +67,7 @@ public class VoteLogger extends JavaPlugin {
         getCommand("vl").setExecutor(new VoteLoggerCommand(this));
 
         // GO GO GO
-        log.info(config.getLogMsg("enable", version));
+        log.info(config.getLogMsg("plugin-enabled", version));
     }
 
     @Override
@@ -76,6 +76,6 @@ public class VoteLogger extends JavaPlugin {
         HandlerList.unregisterAll(this);
 
         // GOOD BYE.
-        log.info(config.getLogMsg("disable", version));
+        log.info(config.getLogMsg("plugin-disabled", version));
     }
 }

@@ -19,32 +19,37 @@
 #
 
 # Prefix. Yoo don't have to attach a space to the end.
-prefix: "&8[&6VoteLogger&8]&r"
+plugin-prefix: "&8[&6VoteLogger&8]&r"
+
+# Log formatting
+# {0}: ISO8601 Time
+# {1}: Service name
+# {2}: Username
+log-format: "{0} {1} {2}"
 
 # Logging
 log-name: "Votes.log"
+
 # Time difference
 log-offset: 9
 
-# Enabled / Disabled message.
-# {0}: Version
-enable: "&6VoteLogger v{0} has been enabled."
-disable: "&6VoteLogger v{0} has been disabled. Good bye!"
-
-# Message for those who doesn't have permission
-# NOTE: This message DOESN'T include prefix.
-insufficient-permission: "&cYou don't have permission."
+#   Configuration
+# -----------------
+#    Translation
 
 # Message for /vl version
 # {0}: Version
 # {1}: Author name
 plugin-version: "&7Version &bv{0}&7, by &b{1}"
 
-# Log formatting
-# {0}: ISO8601 Time
-# {1}: Service name
-# {2}: Username
-logFormat: "{0} {1} {2}"
+# Enabled / Disabled message.
+# {0}: Version
+plugin-enabled: "&6VoteLogger v{0} has been enabled."
+plugin-disabled: "&6VoteLogger v{0} has been disabled. Good bye!"
+
+# Message for those who doesn't have permission
+# NOTE: This message DOESN'T include prefix.
+permission-insufficient: "&cYou don't have permission."
 
 # Commands
 # {0}: Available commands (command-available only)

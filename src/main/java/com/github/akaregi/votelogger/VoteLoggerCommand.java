@@ -78,7 +78,7 @@ public class VoteLoggerCommand implements CommandExecutor {
             }
         } else {
             // YOU ARE NOT ADMINISTRATOR, SORRY.
-            sender.sendMessage(vl.config.getLogMsg("insufficient-permission"));
+            sender.sendMessage(vl.config.getLogMsg("permission-insufficient"));
             return true;
         }
 	}
