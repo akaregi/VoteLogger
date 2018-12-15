@@ -62,7 +62,7 @@ public class VoteLoggerFileLogger {
 
             writer.write(vl.config.getLogMsg(
                     // format style from config.yml
-                    "logFormat",
+                    "log-format",
 
                     // config.yml:logformat Time ({0})
                     VoteLoggerUtil.epochToISO8601(Integer.parseInt(vote.getTimeStamp()),
