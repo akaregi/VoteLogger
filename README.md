@@ -17,7 +17,20 @@ A software for logging votes, works with Votifier.
 
 ## Commands
 
-`/votelogger help` or `/vl help` to see the reference. Available commands are `version` and `help`.
+`/votelogger help` or `/vl help` to see the reference.
+
+### help
+
+`/vl help` to see plugin's help.
+
+### version
+
+`/vl version` or `/vl ver` to see plugin's version.
+
+### log
+
+`/vl log [serviceName] [username] [address]` to write test record to vote log. No arguments is required.
+
 
 ## License
 
