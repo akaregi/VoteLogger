@@ -127,10 +127,10 @@ public class VoteLoggerCommand implements CommandExecutor {
         val vote = new Vote(serviceName, username, address, timeStamp);
 
         if (new VoteLoggerFileLogger(vl).writeVoteLog(vote)) {
-            sender.sendMessage(vl.config.getUserMsg("console-log-success", vote));
+            sender.sendMessage(vl.config.getUserMsg("log-write-success", vote));
             return true;
         } else {
-            sender.sendMessage(vl.config.getUserMsg("console-log-failure", vote));
+            sender.sendMessage(vl.config.getUserMsg("log-write-failure", vote));
             return false;
         }
     }

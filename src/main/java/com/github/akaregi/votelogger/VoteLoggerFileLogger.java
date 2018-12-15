@@ -78,12 +78,12 @@ public class VoteLoggerFileLogger {
             writer.flush();
             writer.close();
 
-            vl.log.info(vl.config.getLogMsg("console-log-success", vote.toString()));
+            vl.log.info(vl.config.getLogMsg("log-write-success", vote.toString()));
 
             return true;
 
         } catch (IOException e) {
-            vl.log.severe(vl.config.getLogMsg("console-log-failure", vote.toString()));
+            vl.log.severe(vl.config.getLogMsg("log-write-failure", vote.toString()));
             e.printStackTrace();
 
             return false;

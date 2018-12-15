@@ -57,7 +57,7 @@ command-available: "&7Available commands: &b{0}"
 command-blank: "&7Please specify arguments."
 command-unknown: "&7Unknown command."
 
-# Console log
+# Log message
 # {0}: Raw message of Java object "Vote"
-console-log-success: "&bLogged a vote: {0}"
-console-log-failure: "&cFailed to log a vote: {0}"
+log-write-success: "&7Succeeded to log a vote: &b{0}"
+log-write-failure: "&cFailed to log a vote: &b{0}"
