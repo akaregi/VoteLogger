@@ -1,7 +1,7 @@
 /*
  *  This file is part of VoteLogger.
  *
- *  VoteLogger: A software for logging votes,worksworks with Votifier.
+ *  VoteLogger: A software for logging votes, works with Votifier.
  *  Copyright (C) 2018 akaregi <akg.tachibana@gmail.com>
  *
  *  This program is free software: you can redistribute it and/or modify
@@ -26,6 +26,13 @@ import java.util.logging.Logger;
 import org.bukkit.event.HandlerList;
 import org.bukkit.plugin.java.JavaPlugin;
 
+/**
+ * VoteLogger: A software for logging votes, works with Votifier.
+ *
+ * @author akaregi
+ * @since 1.0.2-pre
+ *
+ */
 public class VoteLogger extends JavaPlugin {
 
     /**

@@ -22,7 +22,7 @@ A software for logging votes, works with Votifier.
 ## License
 
 ```text
-VoteLogger: A software for logging votes,works with Votifier.
+VoteLogger: A software for logging votes, works with Votifier.
 Copyright (C) 2018 akaregi <akg.tachibana@gmail.com>
 
 This program is free software: you can redistribute it and/or modify
