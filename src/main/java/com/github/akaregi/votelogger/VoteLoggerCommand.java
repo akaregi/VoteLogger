@@ -20,11 +20,16 @@
 
 package com.github.akaregi.votelogger;
 
+import java.time.Instant;
+
+import com.vexsoftware.votifier.model.Vote;
+
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 
 import lombok.NonNull;
+import lombok.val;
 
 /**
  * Dispatches and executes commands for VoteLogger.
@@ -71,6 +76,11 @@ public class VoteLoggerCommand implements CommandExecutor {
                     return true;
                 }
 
+                // /vl log
+                if (args[0].equalsIgnoreCase("log")) {
+                    return commandLog(sender, args);
+                }
+
                 sender.sendMessage(vl.config.getUserMsg("command-unknown"));
 
                 return false;
@@ -89,5 +99,40 @@ public class VoteLoggerCommand implements CommandExecutor {
             return true;
         }
 	}
+
+    /**
+     * /vl log [serviceName] [username] [address]
+     *
+     * @author akaregi
+     * @since 1.0.3-pre
+     *
+     * @param sender Sender who executed this command
+     * @param args   Arguments for logging.
+     *
+     * @return If logging ended in success, true, otherwise false.
+     */
+    private boolean commandLog(CommandSender sender, String[] args) {
+        @NonNull
+        val serviceName = (args.length == 2) ? args[1] : "serviceName";
+
+        @NonNull
+        val username = (args.length == 3) ? args[2] : "username";
+
+        @NonNull
+        val address = (args.length == 4) ? args[3] : "address.com";
+
+        @NonNull
+        val timeStamp = String.valueOf(Instant.now().toEpochMilli() / 1000L);
+
+        val vote = new Vote(serviceName, username, address, timeStamp);
+
+        if (new VoteLoggerFileLogger(vl).writeVoteLog(vote)) {
+            sender.sendMessage(vl.config.getUserMsg("console-log-success", vote));
+            return true;
+        } else {
+            sender.sendMessage(vl.config.getUserMsg("console-log-failure", vote));
+            return false;
+        }
+    }
 
 }

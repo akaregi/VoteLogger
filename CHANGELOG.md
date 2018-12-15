@@ -2,7 +2,7 @@
 
 ## 1.0.3
 
-* Added command `/vl log <user> [serviceName] [address] [timeStamp]` for testing of logging
+* Added command `/vl log [serviceName] [username] [address]` for testing of logging
 
 ## 1.0.2
 
