@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 1.0.4
+
+* Now the plugin logs vote's time by raw data.
+
 ## 1.0.3
 
 * Added command `/vl log [serviceName] [username] [address]` for testing of logging

@@ -2,7 +2,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.github.akaregi.votelogger</groupId>
   <artifactId>VoteLogger</artifactId>
-  <version>1.0.3-SNAPSHOT</version>
+  <version>1.0.4-SNAPSHOT</version>
   <name>VoteLogger</name>
   <description>Logger for Votifier</description>
   <repositories>

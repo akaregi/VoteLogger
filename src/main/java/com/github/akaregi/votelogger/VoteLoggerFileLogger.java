@@ -61,18 +61,18 @@ public class VoteLoggerFileLogger {
             BufferedWriter writer = new BufferedWriter(new FileWriter(logpath, true));
 
             writer.write(vl.config.getLogMsg(
-                    // format style from config.yml
-                    "log-format",
+                // format style from config.yml
+                "log-format",
 
-                    // config.yml:logformat Time ({0})
-                    VoteLoggerUtil.epochToISO8601(Integer.parseInt(vote.getTimeStamp()),
-                            vl.config.getConfig().getInt("log-offset")),
+                // config.yml:logformat Time ({0})
+                vote.getTimeStamp(),
 
-                    // config.yml:logformat Service name ({1})
-                    vote.getServiceName(),
+                // config.yml:logformat Service name ({1})
+                vote.getServiceName(),
 
-                    // config.yml:logformat Username ({2})
-                    vote.getUsername()));
+                // config.yml:logformat Username ({2})
+                vote.getUsername())
+            );
 
             writer.newLine();
             writer.flush();
@@ -81,7 +81,6 @@ public class VoteLoggerFileLogger {
             vl.log.info(vl.config.getLogMsg("log-write-success", vote.toString()));
 
             return true;
-
         } catch (IOException e) {
             vl.log.severe(vl.config.getLogMsg("log-write-failure", vote.toString()));
             e.printStackTrace();
