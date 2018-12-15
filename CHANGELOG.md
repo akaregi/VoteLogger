@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 1.0.5
+
+* Now writes vote address to the log.
+
 ## 1.0.4
 
 * Now the plugin logs vote's time by system date.

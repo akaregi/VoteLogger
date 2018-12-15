@@ -29,8 +29,7 @@ A software for logging votes, works with Votifier.
 
 ### log
 
-`/vl log [serviceName] [username] [address]` to write test record to vote log. No arguments is required.
-
+`/vl log [serviceName] [username] [address]` to write test record to vote log. No arguments is required. `serviceName` is a provider, `username` is Minecraft ID, and `address` is an address of the provider.
 
 ## License
 
