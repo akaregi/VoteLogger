@@ -44,7 +44,7 @@ public class VoteLoggerCommand implements CommandExecutor {
     /**
      * String of implemented sub-commands.
      */
-    private final String availableCommands = "help, version";
+    private final String availableCommands = "help, version, log";
 
     public VoteLoggerCommand(@NonNull VoteLogger vl) {
         this.vl = vl;
