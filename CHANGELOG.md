@@ -2,7 +2,7 @@
 
 ## 1.0.4
 
-* Now the plugin logs vote's time by raw data.
+* Now the plugin logs vote's time by system date.
 
 ## 1.0.3
 

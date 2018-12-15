@@ -20,8 +20,6 @@
 
 package com.github.akaregi.votelogger;
 
-import java.time.Instant;
-
 import com.vexsoftware.votifier.model.Vote;
 
 import org.bukkit.command.Command;
@@ -122,7 +120,7 @@ public class VoteLoggerCommand implements CommandExecutor {
         val address = (args.length == 4) ? args[3] : "address.com";
 
         @NonNull
-        val timeStamp = String.valueOf(Instant.now().toEpochMilli() / 1000L);
+        val timeStamp = "0";
 
         val vote = new Vote(serviceName, username, address, timeStamp);
 

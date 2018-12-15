@@ -34,18 +34,16 @@ import lombok.NonNull;
  */
 public final class VoteLoggerUtil {
     /**
-     * Converts epoch time to String formatted with ISO 8601. *
+     * Gets current time in ISO8601 format.
      *
      * @author akaregi
-     * @since 1.0.1-pre
+     * @since 1.0.4-pre
      *
-     * @param epoch  Epoch time
-     * @param offset Offset of Time
+     * @param offset Time difference. E.g. 9 in JST
      *
-     * @return String formatted with ISO 8601
-     *
+     * @return ISO8601 time
      */
-    public static String epochToISO8601(long epoch, @NonNull Integer offset) {
-        return Instant.ofEpochSecond(epoch).atOffset(ZoneOffset.ofHours(offset)).toString();
+    public static String getTime(@NonNull Integer offset) {
+        return Instant.now().atOffset(ZoneOffset.ofHours(offset)).toString();
     }
 }

@@ -65,7 +65,9 @@ public class VoteLoggerFileLogger {
                 "log-format",
 
                 // config.yml:logformat Time ({0})
-                vote.getTimeStamp(),
+                // NOTE: In Protocol v1 format of vote.getTimeStamp() can't be expected
+                //       So uses system time.
+                VoteLoggerUtil.getTime(vl.getConfig().getInt("log-offset")),
 
                 // config.yml:logformat Service name ({1})
                 vote.getServiceName(),
