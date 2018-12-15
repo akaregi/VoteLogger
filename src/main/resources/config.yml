@@ -44,8 +44,8 @@ plugin-version: "&7Version &bv{0}&7, by &b{1}"
 
 # Enabled / Disabled message.
 # {0}: Version
-plugin-enabled: "&6VoteLogger v{0} has been enabled."
-plugin-disabled: "&6VoteLogger v{0} has been disabled. Good bye!"
+plugin-enabled: "&aVoteLogger v{0} has been enabled."
+plugin-disabled: "&aVoteLogger v{0} has been disabled. Good bye!"
 
 # Message for those who doesn't have permission
 # NOTE: This message DOESN'T include prefix.
