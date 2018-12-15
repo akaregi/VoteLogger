@@ -72,9 +72,12 @@ public class VoteLoggerFileLogger {
                 // config.yml:logformat Service name ({1})
                 vote.getServiceName(),
 
-                // config.yml:logformat Username ({2})
-                vote.getUsername())
-            );
+                // config.yml:logformat Address ({2})
+                vote.getAddress(),
+
+                // config.yml:logformat Username ({3})
+                vote.getUsername()
+            ));
 
             writer.newLine();
             writer.flush();

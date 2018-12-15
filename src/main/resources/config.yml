@@ -24,8 +24,9 @@ plugin-prefix: "&8[&6VoteLogger&8]&r"
 # Log formatting
 # {0}: ISO8601 Time
 # {1}: Service name
-# {2}: Username
-log-format: "[{0}] {1} {2}"
+# {2}: Address
+# {3}: Username
+log-format: "[{0}] {1}({2}) {3}"
 
 # Logging
 log-name: "Votes.log"
