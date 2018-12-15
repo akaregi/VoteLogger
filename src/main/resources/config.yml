@@ -18,7 +18,7 @@
 #  along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #
 
-# Prefix. Yoo don't have to attach a space to the end.
+# Prefix. You don't have to attach a space to the end.
 plugin-prefix: "&8[&6VoteLogger&8]&r"
 
 # Log formatting
