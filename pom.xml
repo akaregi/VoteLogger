@@ -24,16 +24,38 @@
       <scope>compile</scope>
     </dependency>
     <dependency>
+      <groupId>com.vexsoftware</groupId>
+      <artifactId>nuvotifier-universal</artifactId>
+      <version>2.4.1</version>
+      <scope>provided</scope>
+    </dependency>
+    <!-- https://mvnrepository.com/artifact/org.projectlombok/lombok -->
+    <dependency>
       <groupId>org.projectlombok</groupId>
       <artifactId>lombok</artifactId>
       <version>1.18.4</version>
       <scope>provided</scope>
     </dependency>
+    <!-- https://mvnrepository.com/artifact/org.powermock/powermock-module-junit4 -->
     <dependency>
-      <groupId>com.vexsoftware</groupId>
-      <artifactId>nuvotifier-universal</artifactId>
-      <version>2.4.1</version>
-      <scope>provided</scope>
+      <groupId>org.powermock</groupId>
+      <artifactId>powermock-module-junit4</artifactId>
+      <version>${powermock.version}</version>
+      <scope>test</scope>
+    </dependency>
+    <!-- https://mvnrepository.com/artifact/org.powermock/powermock-api-mockito2 -->
+    <dependency>
+      <groupId>org.powermock</groupId>
+      <artifactId>powermock-api-mockito2</artifactId>
+      <version>${powermock.version}</version>
+      <scope>test</scope>
+    </dependency>
+    <!-- https://mvnrepository.com/artifact/junit/junit -->
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>4.12</version>
+      <scope>test</scope>
     </dependency>
   </dependencies>
   <build>
@@ -75,5 +97,6 @@
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+    <powermock.version>1.7.4</powermock.version>
   </properties>
 </project>
