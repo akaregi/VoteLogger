@@ -23,6 +23,7 @@ package com.github.akaregi.votelogger;
 import java.util.List;
 import java.util.logging.Logger;
 
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.event.HandlerList;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -43,27 +44,36 @@ public class VoteLogger extends JavaPlugin {
     /**
      * Logger for VoteLogger
      */
-    protected final Logger log = Logger.getLogger(getName());
+    private final Logger log = Logger.getLogger(getName());
 
     /**
      * Config structure.
      */
-    protected final VoteLoggerConfig config = new VoteLoggerConfig(this);
+    final FileConfiguration config = new VoteLoggerConfig(this).getConfig();
 
     /**
-     * Author name
+     * Author name.
      */
-    protected final List<String> author = getDescription().getAuthors();
+    final List<String> author = getDescription().getAuthors();
+
+
+    /**
+     * Logging path.
+     */
+    String logPath;
 
     /**
      * Message prefix.
      */
-    protected String prefix = "";
+    String prefix = "";
 
     @Override
     public void onEnable() {
         // Initialize prefix
-        prefix = config.getLogMsg("plugin-prefix") + " ";
+        prefix = config.getString("plugin-prefix") + " ";
+
+        // Set logging path
+        logPath = getDataFolder() + "/" + config.getString("log-name");
 
         // Register event VotifierEvent
         getServer().getPluginManager().registerEvents(
@@ -74,7 +84,8 @@ public class VoteLogger extends JavaPlugin {
         getCommand("vl").setExecutor(new VoteLoggerCommand(this));
 
         // GO GO GO
-        log.info(config.getLogMsg("plugin-enabled", version));
+        log.info(VoteLoggerUtil.getFmtText(config.getString("plugin-enabled"), version));
+
     }
 
     @Override
@@ -83,6 +94,6 @@ public class VoteLogger extends JavaPlugin {
         HandlerList.unregisterAll(this);
 
         // GOOD BYE.
-        log.info(config.getLogMsg("plugin-disabled", version));
+        log.info(VoteLoggerUtil.getFmtText(config.getString("plugin-disabled"), version));
     }
 }

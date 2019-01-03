@@ -20,6 +20,7 @@
 
 package com.github.akaregi.votelogger;
 
+import java.text.MessageFormat;
 import java.time.Instant;
 import java.time.ZoneOffset;
 
@@ -32,7 +33,7 @@ import lombok.NonNull;
  * @since 1.0.1-pre
  *
  */
-public final class VoteLoggerUtil {
+final class VoteLoggerUtil {
     /**
      * Gets current time in ISO8601 format.
      *
@@ -43,7 +44,25 @@ public final class VoteLoggerUtil {
      *
      * @return ISO8601 time
      */
-    public static String getTime(@NonNull Integer offset) {
+    static String getTime(@NonNull Integer offset) {
         return Instant.now().atOffset(ZoneOffset.ofHours(offset)).toString();
+    }
+
+    /**
+     * Returns formatted text.
+     *
+     * For example, Given "Message: {0}" as format, and "I love you." as args, this
+     * method returns "Message: I love you.".
+     *
+     * @author akaregi
+     * @since 1.0.6
+     *
+     * @param format Format text, should be included like {0}, {1}, and so on.
+     * @param args   Arguments to be putted.
+     *
+     * @return Formatted text!
+     */
+    static String getFmtText(String format, Object... args) {
+        return MessageFormat.format(format, args).replace("&", "§");
     }
 }

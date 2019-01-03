@@ -23,10 +23,12 @@ package com.github.akaregi.votelogger;
 import com.vexsoftware.votifier.model.Vote;
 import com.vexsoftware.votifier.model.VotifierEvent;
 
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 
 import lombok.NonNull;
+import lombok.val;
 
 /**
  * Listener class for VotifierEvent.
@@ -39,10 +41,13 @@ public class VoteLoggerListener implements Listener {
     /**
      * fileLogger
      */
-    private final VoteLoggerFileLogger fileLogger;
+    private final VoteLogger vl;
 
-    public VoteLoggerListener(@NonNull VoteLogger vl) {
-        this.fileLogger = new VoteLoggerFileLogger(vl);
+    private final FileConfiguration config;
+
+    VoteLoggerListener(@NonNull VoteLogger vl) {
+        this.vl = vl;
+        this.config = vl.config;
     }
 
     /**
@@ -55,6 +60,17 @@ public class VoteLoggerListener implements Listener {
         @NonNull
         Vote vote = event.getVote();
 
-        fileLogger.writeVoteLog(vote);
+        val writeResult = VoteLoggerFileLogger.writeVoteLog(
+            vote,
+            config.getString("log-format"),
+            config.getInt("log-offset"),
+            vl.logPath
+        );
+
+        if (writeResult) {
+            VoteLoggerUtil.getFmtText(config.getString("log-write-success"), vote);
+        } else {
+            VoteLoggerUtil.getFmtText(config.getString("log-write-failure"), vote);
+        }
     }
 }

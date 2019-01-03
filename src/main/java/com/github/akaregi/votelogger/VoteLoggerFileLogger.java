@@ -20,9 +20,10 @@
 
 package com.github.akaregi.votelogger;
 
-import java.io.BufferedWriter;
-import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 
 import com.vexsoftware.votifier.model.Vote;
 
@@ -35,62 +36,85 @@ import lombok.NonNull;
  * @since 1.0.3-pre
  *
  */
-public class VoteLoggerFileLogger {
-    /**
-     * Instance of VoteLogger.
-     */
-    private final VoteLogger vl;
-
-    /**
-     * Targeted path to log for VoteLogger.
-     */
-    private final String logpath;
-
-    public VoteLoggerFileLogger(@NonNull VoteLogger vl) {
-        this.vl = vl;
-        logpath = vl.getDataFolder() + "/" + vl.config.getLogMsg("log-name");
-    }
-
+class VoteLoggerFileLogger {
     /**
      * Writes vote information to the log file.
      *
-     * @param vote Vote information to be logged
+     * @author akaregi
+     * @since 1.0.4-pre
+     *
+     * @param vote    Vote object, must be contained the time, service name,
+     *                address, and username.
+     * @param format  Logging format. It must be like: "[{0}] {1}({2}) {3}". {0} is
+     *                the time. {1} is the service name. {2} is the address. {4} is
+     *                the username.
+     * @param offset  Time offset. For example, in Japan, must be "9" (UTC+9).
+     * @param logPath Path you want to write, includes file name (i.e.
+     *                path/vote.log)
      */
-    public boolean writeVoteLog(@NonNull Vote vote) {
+    static boolean writeVoteLog(@NonNull Vote vote, String format, Integer offset, String logPath) {
         try {
-            BufferedWriter writer = new BufferedWriter(new FileWriter(logpath, true));
-
-            writer.write(vl.config.getLogMsg(
-                // format style from config.yml
-                "log-format",
-
-                // config.yml:logformat Time ({0})
-                // NOTE: In Protocol v1 format of vote.getTimeStamp() can't be expected
-                //       So uses system time.
-                VoteLoggerUtil.getTime(vl.getConfig().getInt("log-offset")),
-
-                // config.yml:logformat Service name ({1})
-                vote.getServiceName(),
-
-                // config.yml:logformat Address ({2})
-                vote.getAddress(),
-
-                // config.yml:logformat Username ({3})
-                vote.getUsername()
-            ));
-
-            writer.newLine();
-            writer.flush();
-            writer.close();
-
-            vl.log.info(vl.config.getLogMsg("log-write-success", vote.toString()));
+            write(logPath, createRecord(vote, format, offset));
 
             return true;
         } catch (IOException e) {
-            vl.log.severe(vl.config.getLogMsg("log-write-failure", vote.toString()));
             e.printStackTrace();
 
             return false;
         }
+    }
+
+    /**
+     * Attempts to write a record to specified file.
+     *
+     * @author akaregi
+     * @since 1.0.6
+     *
+     * @see #writeVoteLog(Vote, String, Integer, String)
+     * @see #write(String, String)
+     *
+     * @param vote   See {@see #writeVoteLog}
+     * @param format See {@see writeVoteLog}
+     * @param offset See {@see writeVoteLog}
+     */
+    private static String createRecord(Vote vote, String format, Integer offset) {
+        return VoteLoggerUtil.getFmtText(
+            // format style from config.yml
+            format,
+
+            // config.yml:logformat Time ({0})
+            // NOTE: In Protocol v1 format of vote.getTimeStamp() can't be expected
+            // So uses system time.
+            VoteLoggerUtil.getTime(offset),
+
+            // config.yml:logformat Service name ({1})
+            vote.getServiceName(),
+
+            // config.yml:logformat Address ({2})
+            vote.getAddress(),
+
+            // config.yml:logformat Username ({3})
+            vote.getUsername()
+        );
+    }
+
+    /**
+     * Attempts to write a record to specified file.
+     *
+     * @author akaregi
+     * @since 1.0.6
+     *
+     * @see #createRecord(Vote, String, Integer)
+     *
+     * @param path   See {@see #writeVoteLog}
+     * @param record Record which will be written
+     */
+    private static void write(String path, String record) throws IOException {
+        Files.write(
+            Paths.get(path),
+            record.getBytes(),
+            StandardOpenOption.CREATE,
+            StandardOpenOption.APPEND
+        );
     }
 }
