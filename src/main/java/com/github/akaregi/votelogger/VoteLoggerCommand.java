@@ -54,55 +54,47 @@ public class VoteLoggerCommand implements CommandExecutor {
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        if (sender.hasPermission("votelogger.admin")) {
-            // Hey you're admin, right?
-            if (args.length != 0) {
-                // /vl version
-                if (
-                    args[0].equalsIgnoreCase("version") ||
-                    args[0].equalsIgnoreCase("ver")
-                ) {
-
-                    sender.sendMessage(VoteLoggerUtil.getFmtText(
-                        vl.prefix + config.getString("plugin-version"), vl.version, vl.author
-                    ));
-
-                    return true;
-                }
-
-                // /vl help
-                if (args[0].equalsIgnoreCase("help")) {
-
-                    sender.sendMessage(VoteLoggerUtil.getFmtText(
-                        vl.prefix + config.getString("log-write-available"), availableCommands
-                    ));
-
-                    return true;
-                }
-
-                // /vl log
-                if (args[0].equalsIgnoreCase("log")) {
-                    return commandLog(sender, args);
-                }
-
-                sender.sendMessage(vl.prefix + config.getString("command-unknown"));
-
-                return false;
-            } else {
-                sender.sendMessage(vl.prefix + config.getString("command-blank"));
-
-                sender.sendMessage(VoteLoggerUtil.getFmtText(
-                    vl.prefix + config.getString("log-write-available"), availableCommands
-                ));
-
-                return false;
-            }
-        } else {
-            // YOU ARE NOT ADMINISTRATOR, SORRY.
+        if (!sender.hasPermission("votelogger.admin")) {
             sender.sendMessage(config.getString("permission-insufficient"));
             return true;
         }
-	}
+
+        if (args.length == 0) {
+            sender.sendMessage(vl.prefix + config.getString("command-blank"));
+
+            sender.sendMessage(
+                    VoteLoggerUtil.getFmtText(vl.prefix + config.getString("log-write-available"), availableCommands));
+
+            return false;
+        }
+
+        // NOTE: Equals /vl "subCommand"
+        val subCommand = args[0];
+
+        if (subCommand.equalsIgnoreCase("version") || args[0].equalsIgnoreCase("ver")) {
+
+            sender.sendMessage(
+                    VoteLoggerUtil.getFmtText(vl.prefix + config.getString("plugin-version"), vl.version, vl.author));
+
+            return true;
+        }
+
+        if (subCommand.equalsIgnoreCase("help")) {
+
+            sender.sendMessage(
+                    VoteLoggerUtil.getFmtText(vl.prefix + config.getString("log-write-available"), availableCommands));
+
+            return true;
+        }
+
+        if (subCommand.equalsIgnoreCase("log")) {
+            return commandLog(sender, args);
+        }
+
+        sender.sendMessage(vl.prefix + config.getString("command-unknown"));
+
+        return false;
+    }
 
     /**
      * /vl log [serviceName] [username] [address]
@@ -131,23 +123,15 @@ public class VoteLoggerCommand implements CommandExecutor {
         @NonNull
         val prefix = (sender instanceof Player) ? vl.prefix : "";
 
-        val writeResult = VoteLoggerFileLogger.writeVoteLog(
-            vote,
-            config.getString("log-format"),
-            config.getInt("log-offset"),
-            vl.logPath
-        );
+        val writeResult = VoteLoggerFileLogger.writeVoteLog(vote, config.getString("log-format"),
+                config.getInt("log-offset"), vl.logPath);
 
         if (writeResult) {
-            sender.sendMessage(
-                VoteLoggerUtil.getFmtText(prefix + config.getString("log-write-success"), vote)
-            );
+            sender.sendMessage(VoteLoggerUtil.getFmtText(prefix + config.getString("log-write-success"), vote));
 
             return true;
         } else {
-            sender.sendMessage(
-                VoteLoggerUtil.getFmtText(prefix + config.getString("log-write-failure"), vote)
-            );
+            sender.sendMessage(VoteLoggerUtil.getFmtText(prefix + config.getString("log-write-failure"), vote));
 
             return false;
         }
